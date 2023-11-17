@@ -11,7 +11,12 @@ const projectRoot = __dirname
 // This can be replaced with `find-yarn-workspace-root`
 const workspaceRoot = path.resolve(projectRoot, '../..')
 
-const config = getDefaultConfig(projectRoot)
+const config = getDefaultConfig(projectRoot, __dirname, {
+  // [Web-only]: Enables CSS support in Metro.
+  isCSSEnabled: true,
+});
+
+
 
 // 1. Watch all files within the monorepo
 config.watchFolders = [workspaceRoot]
@@ -22,5 +27,6 @@ config.resolver.nodeModulesPaths = [
 ]
 // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
 config.resolver.disableHierarchicalLookup = true
+config.resolver.sourceExts.push('mjs');
 
 module.exports = config
